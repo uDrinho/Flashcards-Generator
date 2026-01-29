@@ -1,23 +1,35 @@
+import os
 import instructor
+from functools import lru_cache
 from openai import OpenAI
 from pydantic import BaseModel, Field
 from typing import List
 from .models import FlashcardSet
 
-# --- Client Configuration ---
-client = instructor.from_openai(
-    OpenAI(
-        base_url="http://localhost:11434/v1",
-        api_key="ollama",
-    ),
-    mode=instructor.Mode.JSON,
-)
+# --- Configuration & Factory ---
+
+@lru_cache
+def get_client() -> instructor.Instructor:
+    """
+    Creates and caches the Instructor client.
+    Uses @lru_cache to ensure we strictly have one instance (Singleton).
+    """
+    host = os.getenv("OLLAMA_HOST", "http://localhost:11434/v1")
+    api_key = os.getenv("OLLAMA_API_KEY", "ollama")
+
+    return instructor.from_openai(
+        OpenAI(
+            base_url=host,
+            api_key=api_key,
+        ),
+        mode=instructor.Mode.JSON,
+    )
 
 def generate_flashcards(text_chunk: str, model: str = "llama3.2") -> FlashcardSet:
     """
     Sends a text chunk to Ollama and returns validated Flashcard objects.
     """
-    
+    client = get_client()
     # SYSTEM PROMPT: Enforcing strict LaTeX syntax for math
     system_prompt = """
     You are a university assistant specializing in creating high-quality Anki flashcards.
