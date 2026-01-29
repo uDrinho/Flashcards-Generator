@@ -19,6 +19,17 @@ Flashcards-Generator is designed for students who need reliable study materials.
 * **Portuguese Output:** The system prompt is hardcoded to translate and synthesize concepts into Portuguese, making it ideal for non-native English speakers studying technical docs.
 * **Batch Processing:** Capable of processing entire directories of PDFs in one go.
 
+## Known Limitations & Areas for Improvement
+
+While functional, this project relies on local hardware resources. Consider the following:
+
+* **Hardware Dependency (Speed):** Generation speed is directly tied to your CPU/GPU.
+    * *High-End (M1/M2/M3 Mac, RTX GPU):* Very fast generation.
+    * *Mid-Range (Modern i5/i7):* Acceptable speeds (~5-15 seconds per chunk).
+    * **Low-End / Older PCs:** Generation may be **slow**. Since the model runs locally, older CPUs may take significant time to process large PDFs.
+* **Model Intelligence:** We currently recommend `llama3.2` for speed. However, larger models (like `llama3.3` or `mistral`) may produce better summaries but will require more RAM and processing power.
+* **PDF Complexity:** Scanned PDFs (images) are not currently supported (OCR is not implemented yet). The tool works best with text-selectable PDFs.
+
 ## Requirements
 
 * **Python 3.10+**
