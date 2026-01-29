@@ -1,0 +1,15 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Data 
+data/input/*
+data/output/*
+!data/input/.gitkeep
+!data/output/.gitkeep
+
+# Editor settings (VS Code, etc)
+.vscode/
+.idea/
